@@ -1,0 +1,53 @@
+package com.crazypug.web.exception;
+
+
+import com.crazypug.core.bean.Result;
+import com.crazypug.core.exception.BadRequestException;
+import com.crazypug.core.exception.BusinessException;
+import com.crazypug.core.exception.ServerErrorException;
+import com.crazypug.core.exception.UnauthorizedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class ExceptionHandlerAdvice {
+
+    @ExceptionHandler(BadRequestException.class)
+    public Result<String> handleException(BadRequestException ex){
+       return Result.badRequest(ex.getMessage());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public Result<String> handleException(BusinessException ex){
+        return Result.accepted(ex.getMessage());
+    }
+
+    @ExceptionHandler({ServerErrorException.class,Throwable.class})
+    public Result<String> handleException(Throwable ex){
+        return Result.internalServerError(ex.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public Result<String> handleException(UnauthorizedException ex){
+        return Result.unauthorized(ex.getMessage());
+    }
+
+
+
+    public Result<String> pareException(Throwable ex){
+        if (ex instanceof BadRequestException){
+            return handleException((BadRequestException)ex);
+        }else  if (ex instanceof BusinessException){
+            return handleException((BusinessException)ex);
+        }else  if (ex instanceof UnauthorizedException){
+            return handleException((UnauthorizedException)ex);
+        }else  {
+            return handleException(ex);
+        }
+
+    }
+
+
+
+}
