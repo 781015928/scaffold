@@ -4,7 +4,9 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.crazypug.web.config.CrazyPugConfig;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,18 +19,25 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class MDCInterceptor implements HandlerInterceptor {
 
-    private static final String TRACE_ID = "X-TRACE-ID";
+
+    private  CrazyPugConfig  crazyPugConfig;
+
+    public MDCInterceptor(CrazyPugConfig crazyPugConfig) {
+        this.crazyPugConfig = crazyPugConfig;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        String traceId = request.getHeader(TRACE_ID);
+        String traceId = request.getHeader(crazyPugConfig.mdc.traceIdName);
         if (traceId != null) {
-            MDC.put(TRACE_ID, traceId);
+            MDC.put(crazyPugConfig.mdc.traceIdName, traceId);
         }
 
 
-        setTraceIdIfAbsent();
+        traceId = setTraceIdIfAbsent();
+
+        response.setHeader(crazyPugConfig.mdc.traceIdName, traceId);
         return true;
     }
 
@@ -36,20 +45,24 @@ public class MDCInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
                                 @Nullable Exception ex) {
 
-        String traceId = MDC.get(TRACE_ID);
-        response.addHeader(TRACE_ID, traceId);
+
         remove();
     }
 
 
-    public static void setTraceIdIfAbsent() {
-        if (MDC.get(TRACE_ID) == null) {
-            MDC.put(TRACE_ID, generateTraceId());
+    public  String setTraceIdIfAbsent() {
+        String traceId=MDC.get(crazyPugConfig.mdc.traceIdName);
+        if (traceId== null) {
+            traceId  = generateTraceId();
+            MDC.put(crazyPugConfig.mdc.traceIdName, traceId);
         }
+
+
+        return traceId;
     }
 
-    public static void remove() {
-        MDC.remove(TRACE_ID);
+    public  void remove() {
+        MDC.remove(crazyPugConfig.mdc.traceIdName);
     }
 
 

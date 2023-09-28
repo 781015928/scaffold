@@ -16,13 +16,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Aspect
-@Component
 public class LogAspect  {
 
     private ObjectMapper objectMapper=new ObjectMapper();
@@ -97,6 +93,18 @@ public class LogAspect  {
             logger.info("========================================== request_start ==========================================");
             logger.info("URL            : {}", request.getRequestURL().toString());
             logger.info("HTTP Method    : {}", request.getMethod());
+
+            Enumeration<String> headerNames = request.getHeaderNames();
+            if (headerNames.hasMoreElements()){
+                String headerName = headerNames.nextElement();
+                logger.info("Http Header    : {}={}", headerName,request.getHeader(headerName));
+
+            }
+
+            while (headerNames.hasMoreElements()){
+                String headerName = headerNames.nextElement();
+                logger.info("                 {}={}", headerName,request.getHeader(headerName));
+            }
             logger.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
             logger.info("IP             : {}", request.getRemoteAddr());
 

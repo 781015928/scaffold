@@ -6,12 +6,18 @@ import com.crazypug.core.exception.BadRequestException;
 import com.crazypug.core.exception.BusinessException;
 import com.crazypug.core.exception.ServerErrorException;
 import com.crazypug.core.exception.UnauthorizedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@ConditionalOnProperty(name = "crazypug.exception-handler.enable", havingValue = "true")
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
+
+   private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerAdvice.class);
 
     @ExceptionHandler(BadRequestException.class)
     public Result<String> handleException(BadRequestException ex){
@@ -25,11 +31,13 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler({ServerErrorException.class,Throwable.class})
     public Result<String> handleException(Throwable ex){
+        log.error(ex.getMessage(),ex);
         return Result.internalServerError(ex.getMessage());
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     public Result<String> handleException(UnauthorizedException ex){
+
         return Result.unauthorized(ex.getMessage());
     }
 
