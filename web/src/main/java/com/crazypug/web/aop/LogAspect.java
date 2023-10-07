@@ -1,6 +1,7 @@
 package com.crazypug.web.aop;
 
 import com.crazypug.core.bean.Result;
+import com.crazypug.web.config.CrazyPugConfig;
 import com.crazypug.web.exception.ExceptionHandlerAdvice;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,6 +26,9 @@ public class LogAspect  {
     private ObjectMapper objectMapper=new ObjectMapper();
     private Set<Method> whiteList=new HashSet<>();
     private Map<Method,LogIgnore> blackListMethod=new HashMap<Method,LogIgnore>();
+
+    @Autowired(required = false)
+    private CrazyPugConfig crazyPugConfig;
 
 
     @Autowired(required = false)
@@ -98,9 +103,12 @@ public class LogAspect  {
             if (headerNames.hasMoreElements()){
                 String headerName = headerNames.nextElement();
                 logger.info("Http Header    : {}={}", headerName,request.getHeader(headerName));
-
             }
-
+            String traceIdName = request.getHeader(crazyPugConfig.mdc.traceIdName);
+            if (traceIdName != null) {
+                String traceId = MDC.get(traceIdName);
+                logger.info("Request MDC    : {}={}", traceIdName,traceId);
+            }
             while (headerNames.hasMoreElements()){
                 String headerName = headerNames.nextElement();
                 logger.info("                 {}={}", headerName,request.getHeader(headerName));
