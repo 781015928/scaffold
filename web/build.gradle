@@ -39,6 +39,9 @@ dependencies {
     compileOnly 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     compileOnly 'org.apache.tomcat.embed:tomcat-embed-core:9.0.63'
 
+    implementation 'org.springframework.boot:spring-boot-starter:2.7.0'
+
+
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.0'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.24'

@@ -3,6 +3,7 @@ package com.crazypug.core.exception;
 public class Exceptions {
 
 
+
     public static void returnThrowBadRequest(String message, Throwable cause) {
         throw new BadRequestException(message, cause);
     }
