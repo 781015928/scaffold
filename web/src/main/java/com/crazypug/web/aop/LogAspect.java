@@ -104,7 +104,7 @@ public class LogAspect  {
                 String headerName = headerNames.nextElement();
                 logger.info("Http Header    : {}={}", headerName,request.getHeader(headerName));
             }
-            String traceIdName = request.getHeader(crazyPugConfig.mdc.traceIdName);
+            String traceIdName = crazyPugConfig.mdc.traceIdName;
             if (traceIdName != null) {
                 String traceId = MDC.get(traceIdName);
                 logger.info("Request MDC    : {}={}", traceIdName,traceId);
