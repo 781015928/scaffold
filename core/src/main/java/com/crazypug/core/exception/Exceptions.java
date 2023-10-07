@@ -1,5 +1,9 @@
 package com.crazypug.core.exception;
 
+
+/**
+ * test webhook
+ */
 public class Exceptions {
 
 
