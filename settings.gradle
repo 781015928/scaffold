@@ -1,3 +1,5 @@
 include ':core'
 include ':web'
+include ':web-data'
+include ':web-mybatis'
 include ':web-test'
