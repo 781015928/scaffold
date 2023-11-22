@@ -1,9 +1,8 @@
 package com.crazypug.webtest;
 
 
-import com.crazypug.core.bean.Result;
-import com.crazypug.core.exception.BusinessException;
-import com.crazypug.web.aop.MDCInterceptor;
+import com.crazypug.web.core.bean.Result;
+import com.crazypug.web.core.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

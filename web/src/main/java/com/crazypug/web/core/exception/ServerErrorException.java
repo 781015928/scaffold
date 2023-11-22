@@ -1,4 +1,4 @@
-package com.crazypug.core.exception;
+package com.crazypug.web.core.exception;
 
 public class ServerErrorException extends RuntimeException{
     public ServerErrorException() {

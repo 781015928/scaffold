@@ -1,4 +1,4 @@
-package com.crazypug.core.bean;
+package com.crazypug.web.core.bean;
 
 
 public class Result<T> {

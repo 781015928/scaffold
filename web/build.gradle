@@ -1,5 +1,6 @@
  apply plugin:'java'
  apply plugin:'java-library'
+
 //
 //plugins {
 //    id 'java'
@@ -35,6 +36,7 @@ dependencies {
 
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.0'
+    api 'com.github.xiaoymin:knife4j-openapi2-spring-boot-starter:4.0.0'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation 'org.springframework:spring-aop:5.3.20'

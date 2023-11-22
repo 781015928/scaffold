@@ -1,6 +1,6 @@
 package com.crazypug.web.aop;
 
-import com.crazypug.core.bean.Result;
+import com.crazypug.web.core.bean.Result;
 import com.crazypug.web.config.CrazyPugConfig;
 import com.crazypug.web.exception.ExceptionHandlerAdvice;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -98,17 +98,17 @@ public class LogAspect  {
             logger.info("========================================== request_start ==========================================");
             logger.info("URL            : {}", request.getRequestURL().toString());
             logger.info("HTTP Method    : {}", request.getMethod());
-
-            Enumeration<String> headerNames = request.getHeaderNames();
-            if (headerNames.hasMoreElements()){
-                String headerName = headerNames.nextElement();
-                logger.info("Http Header    : {}={}", headerName,request.getHeader(headerName));
-            }
             String traceIdName = crazyPugConfig.mdc.traceIdName;
             if (traceIdName != null) {
                 String traceId = MDC.get(traceIdName);
                 logger.info("Request MDC    : {}={}", traceIdName,traceId);
             }
+            Enumeration<String> headerNames = request.getHeaderNames();
+            if (headerNames.hasMoreElements()){
+                String headerName = headerNames.nextElement();
+                logger.info("Http Header    : {}={}", headerName,request.getHeader(headerName));
+            }
+
             while (headerNames.hasMoreElements()){
                 String headerName = headerNames.nextElement();
                 logger.info("                 {}={}", headerName,request.getHeader(headerName));

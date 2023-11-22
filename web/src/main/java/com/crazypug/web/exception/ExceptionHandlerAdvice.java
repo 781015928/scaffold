@@ -1,11 +1,11 @@
 package com.crazypug.web.exception;
 
 
-import com.crazypug.core.bean.Result;
-import com.crazypug.core.exception.BadRequestException;
-import com.crazypug.core.exception.BusinessException;
-import com.crazypug.core.exception.ServerErrorException;
-import com.crazypug.core.exception.UnauthorizedException;
+import com.crazypug.web.core.bean.Result;
+import com.crazypug.web.core.exception.BadRequestException;
+import com.crazypug.web.core.exception.BusinessException;
+import com.crazypug.web.core.exception.ServerErrorException;
+import com.crazypug.web.core.exception.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

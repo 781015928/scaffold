@@ -1,4 +1,4 @@
-package com.crazypug.core.bean;
+package com.crazypug.web.core.bean;
 
 public enum CodeEnum {
     OK(200,"ok"),
