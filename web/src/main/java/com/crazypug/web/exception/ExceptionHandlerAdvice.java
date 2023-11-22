@@ -9,12 +9,14 @@ import com.crazypug.web.core.exception.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @ConditionalOnProperty(name = "crazypug.exception-handler.enable", havingValue = "true")
-@RestControllerAdvice
+@RestControllerAdvice(annotations = {Controller.class, RestController.class})
 public class ExceptionHandlerAdvice {
 
    private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerAdvice.class);
