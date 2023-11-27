@@ -1,8 +1,6 @@
-apply plugin:'java'
-apply plugin:'java-library'
-apply plugin:'io.spring.dependency-management'
-
-
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'io.spring.dependency-management'
 
 
 java {
@@ -10,10 +8,9 @@ java {
 }
 
 
-
 dependencies {
 
-    implementation project(':web')
+    api project(':web')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
