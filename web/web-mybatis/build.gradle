@@ -9,11 +9,11 @@ java {
 
 
 dependencies {
-    implementation project(":web")
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
-    implementation("io.mybatis:mybatis-mapper:1.2.2")
-    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.0.0'
-    implementation("io.mybatis:mybatis-service:1.2.2")
-    implementation("io.mybatis:mybatis-activerecord:1.2.2")
+    api project(":web")
+    api 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+    api("io.mybatis:mybatis-mapper:1.2.2")
+    api 'com.github.pagehelper:pagehelper-spring-boot-starter:2.0.0'
+    api("io.mybatis:mybatis-service:1.2.2")
+    api("io.mybatis:mybatis-activerecord:1.2.2")
 }
 

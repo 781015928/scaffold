@@ -13,7 +13,7 @@ java {
 
 dependencies {
 
-    implementation project(':web')
+    api project(':web')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     api 'com.github.xiaoymin:knife4j-openapi2-spring-boot-starter:4.3.0'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.0'
