@@ -1,3 +1,5 @@
+import java.util.stream.Collectors
+
 //plugins {
 //    id 'java'
 //    id 'org.springframework.boot' version '2.7.0'
@@ -32,20 +34,42 @@
 //    useJUnitPlatform()
 //}
 
+buildscript {
 
-allprojects {
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.1.4"
+    }
+
+    repositories {
+
+
+        mavenCentral()
+
+        maven {
+            url "https://plugins.gradle.org/m2/"
+
+            allowInsecureProtocol true
+        }
+    }
+}
+
+
+subprojects {
     apply plugin: "java"
     repositories {
         mavenCentral()
     }
     group = 'com.crazypug'
+
+
+    println(project.plugins.findAll().stream().map { it.toString() }
+            .collect(Collectors.joining(",")))
     dependencies {
         implementation 'org.slf4j:slf4j-api:1.7.36'
         annotationProcessor 'org.projectlombok:lombok:1.18.22'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
         compileOnly 'org.projectlombok:lombok:1.18.22'
-        //annotationProcessor 'org.projectlombok:lombok:1.18.22'
-        //testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     }
     version = PROJECT_VERSION
 }
