@@ -19,10 +19,18 @@ public class ProcessExecute {
     public Stream<String> execute(List<String> command) {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(command);
+
+        if (log.isInfoEnabled()) {
+            log.info(command.stream().collect(Collectors.joining(" ")));
+        }
+
+        ProcessIterator processIterator = new ProcessIterator(builder);
         try {
-            return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
-                    new ProcessIterator(builder),
+            Stream<String> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                    processIterator,
                     Spliterator.ORDERED | Spliterator.IMMUTABLE), false);
+            processIterator.injection(stream);
+            return stream;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -99,7 +107,7 @@ public class ProcessExecute {
                 }
                 return line;
             } catch (IOException e) {
-                throw new RuntimeException(getErrorMessage(),e);
+                throw new RuntimeException(getErrorMessage(), e);
             }
         }
 
@@ -109,11 +117,16 @@ public class ProcessExecute {
                 infoReader.close();
                 int code = process.waitFor();
                 if (code != 0) {
-                    throw new UnexpectedlyQuitException("process exit code  "+process.exitValue()+"\n" +getErrorMessage(), process.exitValue());
+                    throw new UnexpectedlyQuitException("process exit code  " + process.exitValue() + "\n" + getErrorMessage(), process.exitValue());
                 }
                 process.destroy();
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            } finally {
+                if (stream != null) {
+                    stream.close();
+                }
+
             }
         }
 
@@ -130,18 +143,22 @@ public class ProcessExecute {
 
         @Override
         public String next() {
-
             String currentLine = this.line;
-
             this.line = read();
-
+            if (log.isDebugEnabled()) {
+                log.debug(line);
+            }
             if (this.line == null) {
                 finish();
             }
             return currentLine;
         }
 
+        Stream<String> stream;
 
+        public void injection(Stream<String> stream) {
+            this.stream = stream;
+        }
     }
 
 

@@ -1,9 +1,10 @@
 package com.crazypug.cli.ffmpeg;
 
-import com.crazypug.cli.ffmpeg.enums.EncodingFormat;
+import com.crazypug.cli.ffmpeg.enums.AudioEncodingFormat;
+import com.crazypug.cli.ffmpeg.enums.VideoEncodingFormat;
+import com.crazypug.utils.JsonUtil;
 
 import java.io.File;
-import java.util.stream.Collectors;
 
 public class FFmpegTest {
     public static void main(String[] args) {
@@ -22,18 +23,21 @@ public class FFmpegTest {
                 = new FFmpegCommandBuilder()
                 .addInputVideoPath("core/build/video/1.mp4")
                 .addInputVideoPath("core/build/video/2.mp4")
-                .addInputVideoPath("core/build/video/3.mp4")
-                .encodingFormat(EncodingFormat.COPY)
+                .waterMark("core/build/video/1111.png")
+                .audioEncodingFormat(AudioEncodingFormat.AAC)
+                .videoEncodingFormat(VideoEncodingFormat.H264_VIDEO_TOOL_BOX)
                 .outputVideoPath(file_3);
+        System.out.println(JsonUtil.writePrettyString(fFmpegCommandBuilder));
+
 
 //        FFprobeInfo mediaInfo = new FFprobeCommand().getMediaInfo(path);
 //        System.out.println(JsonUtil.writePrettyString(mediaInfo));
 
-        System.out.println(fFmpegCommandBuilder.getCommand().stream().collect(Collectors.joining(" ")));
-        FFmpegCommand fFmpegCommand = new FFmpegCommand();
-
-        fFmpegCommand.executeCommand(fFmpegCommandBuilder.getCommand())
-                .forEach(System.out::println);
+//        System.out.println(fFmpegCommandBuilder.getCommand().stream().collect(Collectors.joining(" ")));
+     FFmpegCommand fFmpegCommand = new FFmpegCommand();
+//
+     fFmpegCommand.executeAndGetProgress(1,fFmpegCommandBuilder)
+       .forEach(System.out::println);
 
 
     }

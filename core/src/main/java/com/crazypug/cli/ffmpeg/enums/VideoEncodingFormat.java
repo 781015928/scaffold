@@ -10,14 +10,14 @@ import lombok.Getter;
  * @Description: <br/>
  */
 @Getter
-public enum EncodingFormat {
+public enum VideoEncodingFormat {
     H264("libx264", 1),//此类型有几十种 只列出通用的
     H265("libx265", 1),//此类型有几十种 只列出通用的
+    H264_VIDEO_TOOL_BOX("h264_videotoolbox", 1),//此类型有几十种 只列出通用的
+    OPEN_H264("libopenh264", 1),//此类型有几十种 只列出通用的
+    FLV("flv", 1),//此类型有几十种 只列出通用的
+    AVI("libaom-av1", 1),//此类型有几十种 只列出通用的
 
-    AAC("aac", 2),//此类型有几十种 只列出通用的
-
-    MP3("libmp3lame", 2),
-    FLAC("flac", 2),//通用
     COPY("copy", 3),//通用
 
     // 封装格式。
@@ -28,14 +28,14 @@ public enum EncodingFormat {
 
     private int fileType;
 
-    EncodingFormat(String libName, int fileType) {
+    VideoEncodingFormat(String libName, int fileType) {
         this.libName = libName;
         this.fileType = fileType;
 
     }
 
-    public static EncodingFormat getEncodingFormat(String name) {
-        EncodingFormat encodingFormat = EncodingFormat.valueOf(name.toUpperCase());
+    public static VideoEncodingFormat getEncodingFormat(String name) {
+        VideoEncodingFormat encodingFormat = VideoEncodingFormat.valueOf(name.toUpperCase());
         if (encodingFormat == null) {
             return COPY;
         }
