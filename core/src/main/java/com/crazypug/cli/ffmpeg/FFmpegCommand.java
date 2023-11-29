@@ -25,8 +25,9 @@ public class FFmpegCommand extends Command {
     //frame=204873 fps=3413 q=23.0 size= 1168637kB time=01:53:56.86 bitrate=1400.3kbits/s speed= 114x
     // size=  375040kB time=00:45:50.58 bitrate=1117.0kbits/s speed=1.37e+03x
     //frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.34 bitrate=   1.1kbits/s dup=1 drop=0 speed=21.8x
-    private static final Pattern FRAME_PATTERN = Pattern.compile(".*size=([\\s\\S]*)time=(.*?)bitrate=([\\s\\S]*/s) speed=(.*?)x");
+    private static final  Pattern FRAME_PATTERN = Pattern.compile(".*size=([\\s\\S]*)time=(.*?)bitrate=([\\s\\S]*/s) .* speed=(.*?)x");
     //进度
+
 
 
     private long intervalSeconds = -1;
@@ -200,7 +201,6 @@ public class FFmpegCommand extends Command {
     }
 
     private FFmpegProgress getProgress(String info) {
-        System.out.println(info);
         Matcher matcher = FRAME_PATTERN.matcher(info);
         matcher.find();
         return FFmpegProgress.builder()
@@ -240,5 +240,21 @@ public class FFmpegCommand extends Command {
     @Override
     public String getBinary() {
         return "ffmpeg";
+    }
+
+    public static void main(String[] args) {
+
+        //进度
+
+        String s = "frame=47584 fps=826 q=22.0 size=  295680kB time=00:26:26.13 bitrate=1527.1kbits/s dup=1 drop=0 speed=27.5x    ";
+
+        Matcher matcher = FRAME_PATTERN.matcher(s);
+        matcher.find();
+
+
+        String group = matcher.group();
+
+        System.out.println(group);
+
     }
 }
