@@ -60,10 +60,7 @@ public class ExtendedConverterFactory extends Converter.Factory {
 
             return new DocumentResponseBodyConverter();
         }
-        if (QueryObjectRequestConverter.isQueryObjectConverter(type, annotations)) {
-            Query query = QueryObjectRequestConverter.getQuery(annotations);
-            return new QueryObjectRequestConverter<>(mapper, query);
-        }
+
         if (DocumentSelectResponseBodyConverter.isDocumentSelectConverter(type, annotations)) {
             Select select = DocumentSelectResponseBodyConverter.getSelect(annotations);
             return new DocumentSelectResponseBodyConverter(select);
@@ -78,6 +75,15 @@ public class ExtendedConverterFactory extends Converter.Factory {
         return new JacksonResponseBodyConverter<>(reader);
     }
 
+    @Override
+    public Converter<?, String> stringConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+        if (QueryObjectRequestConverter.isQueryObjectConverter(type, annotations)) {
+            Query query = QueryObjectRequestConverter.getQuery(annotations);
+            return new QueryObjectRequestConverter<>(mapper, query);
+        }
+
+        return null;
+    }
 
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type,
@@ -209,8 +215,6 @@ public class ExtendedConverterFactory extends Converter.Factory {
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-
-
 
 
         }
