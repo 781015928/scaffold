@@ -66,6 +66,7 @@ subprojects {
     println(project.plugins.findAll().stream().map { it.toString() }
             .collect(Collectors.joining(",")))
     dependencies {
+        testImplementation 'junit:junit:4.12'
         implementation 'org.slf4j:slf4j-api:1.7.36'
         annotationProcessor 'org.projectlombok:lombok:1.18.22'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'

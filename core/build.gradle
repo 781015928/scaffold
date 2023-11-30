@@ -1,6 +1,9 @@
 apply plugin:'java-library'
 
 dependencies {
-    api 'cn.hutool:hutool-all:5.8.16'
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.13.5"
+    api "com.fasterxml.jackson.core:jackson-databind:2.13.5"
+    api 'com.squareup.retrofit2:retrofit:2.1.0'
+    api 'cn.hutool:hutool-all:5.8.20'
+    api 'org.jsoup:jsoup:1.11.3'
+    api 'com.alibaba:druid:1.2.3'
 }
