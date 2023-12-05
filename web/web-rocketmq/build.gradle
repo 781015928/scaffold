@@ -11,6 +11,6 @@ java {
 dependencies {
     api project(":web")
 
-    implementation "org.apache.rocketmq:rocketmq-spring-boot-starter:2.2.3"
+    api "org.apache.rocketmq:rocketmq-spring-boot-starter:2.2.3"
 }
 
